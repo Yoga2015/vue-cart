@@ -1,23 +1,26 @@
 <template>
   <div class="goods-container">
-    <!-- 左侧图片 -->
+    <!-- 左侧图片   -->
     <div class="thumb">
       <div class="custom-control custom-checkbox">
-        <!-- 复选框 -->
-        <input type="checkbox" class="custom-control-input" id="cb1" :checked="true" />
-        <label class="custom-control-label" for="cb1">
-          <!-- 商品的缩略图 -->
-          <img src="../../assets/logo.png" alt="" />
+
+        <!-- 20、23、复选框 ,在子组件中，通过v-model要监听 复选框 状态变化的事件-->
+        <input type="checkbox" class="custom-control-input" :id="'cb'+id"  v-model="state"/>
+
+        <label class="custom-control-label" :for="'cb'+id">
+
+          <!--17、商品的缩略图 -->
+          <img :src="pic" alt="" />
         </label>
       </div>
     </div>
     <!-- 右侧信息区域 -->
     <div class="goods-info">
-      <!-- 商品标题 -->
-      <h6 class="goods-title">商品名称商品名称商品名称商品名称</h6>
+      <!-- 12、商品标题 -->
+      <h6 class="goods-title">{{title}}</h6>
       <div class="goods-info-bottom">
-        <!-- 商品价格 -->
-        <span class="goods-price">￥0</span>
+        <!-- 15、商品价格 -->
+        <span class="goods-price">{{ price }}</span>
         <!-- 商品的数量 -->
       </div>
     </div>
@@ -25,7 +28,37 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    //22、为什么要封装一个 商品的id 的 自定义属性 呢？将来子组件中商品的勾选状态变化之后，
+    //   需要通过 子--》父的形式，通知 父组件根据 id 修改对应商品的勾选状态
+    id: {
+      type: Number,
+      default:''
+    },
+    // 11 、要渲染的商品的名称
+    title: {
+      type: String,
+      default:''
+    },
+    // 14、要渲染的商品的价格
+    price: {
+      type: Number,
+      default:''
+    },
+    //16、 要渲染的商品的图片
+    pic: {
+      type: String,
+      default:''
+    },
+    //19、 要渲染的商品的状态，是否已勾选
+    state: {
+      type:Boolean,
+      default:false
+    },
+  },
+  
+}
 </script>
 
 <style lang="less" scoped>

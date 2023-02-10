@@ -1,9 +1,11 @@
 <template>
-  <div class="header-container">标题</div>
+  <div class="header-container">购物车</div>
 </template>
 
 <script>
-export default {}
+export default {
+ 
+}
 </script>
 
 <style lang="less" scoped>
