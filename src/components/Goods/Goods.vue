@@ -4,14 +4,15 @@
     <div class="thumb">
       <div class="custom-control custom-checkbox">
 
-        <!-- 20、23、复选框 ,在子组件中，通过v-model要监听 复选框 状态变化的事件-->
-        <input type="checkbox" class="custom-control-input" :id="'cb'+id"  v-model="state"/>
+        <!-- 20、23、复选框 ,在子组件中，监听 复选框 状态变化的事件-->
+        <input type="checkbox" class="custom-control-input" :id="'cb'+id" :checked="state" @change="stateChange"/>
 
+        <!-- 24 -->
         <label class="custom-control-label" :for="'cb'+id">
-
           <!--17、商品的缩略图 -->
           <img :src="pic" alt="" />
         </label>
+
       </div>
     </div>
     <!-- 右侧信息区域 -->
@@ -21,17 +22,28 @@
       <div class="goods-info-bottom">
         <!-- 15、商品价格 -->
         <span class="goods-price">{{ price }}</span>
-        <!-- 商品的数量 -->
+
+        <!-- 41、53、55、商品的数量  引入 Counter组件的实例-->
+        <Counter :num="count" :id ="id"></Counter>
+        
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// 39、导入 Counter 组件
+import Counter from '@/components/Counter/Counter.vue'
+
 export default {
+  components: {
+    // 40、注册 Counter 组件 ，可以使用 Counter组件的实例
+    Counter
+  },
   props: {
-    //22、为什么要封装一个 商品的id 的 自定义属性 呢？将来子组件中商品的勾选状态变化之后，
-    //   需要通过 子--》父的形式，通知 父组件根据 id 修改对应商品的勾选状态
+    //22、商品的id
+    // 为什么要封装一个 商品的id 的 自定义属性 呢？将来子组件中商品的勾选状态变化之后，
+    // 需要通过 子--》父的形式，通知 父组件根据 id 修改对应商品的勾选状态
     id: {
       type: Number,
       default:''
@@ -56,6 +68,19 @@ export default {
       type:Boolean,
       default:false
     },
+    // 49、商品的购买数量
+    count: {
+      type: Number,
+      default:1,
+    }, 
+  },
+  methods: {
+    // 25、监听 复选框 状态变化
+    stateChange(e) { 
+      // console.log(e);
+      const newState = e.target.checked;
+      this.$emit('state-change', { id: this.id, value: newState });  
+    }
   },
   
 }
